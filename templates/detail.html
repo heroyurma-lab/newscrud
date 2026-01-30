@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 20px">
+    >>>>>><h3>Category : {{ new.category }}</h3>
+<h1 style="padding: 20px;">{{ new.title }}</h1>
+<h3>{{new.body}}</h3>
+
+<img src="{{ new.img.url }}" width="100%">
+<h3>Qo'yilgan kun:  {{new.created_at}}</h3>
+    </div>
+{% endblock content %}

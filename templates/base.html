@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<title>NewsFeed</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+<link rel="stylesheet" href="{% static 'css/font.css' %}">
+<link rel="stylesheet" href="{% static 'css/li-scroller.css' %}">
+<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+<link rel="stylesheet" href="{% static 'css/jquery.fancybox.css' %}">
+<link rel="stylesheet" href="{% static 'css/theme.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="body.css"><!--[if lt IE 9]>
+<script src="assets/js/html5shiv.min.js"></script>
+<script src="assets/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="body">
+<div id="preloader">
+  <div id="status">&nbsp;</div>
+</div>
+<a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+<div class="container">
+  <header id="header">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="header_top">
+          <div class="header_top_left">
+            <ul class="top_nav">
+              <li><a href="{% url 'home_page_view'%}">Asosiy Menyu</a></li>
+              <li><a href="{% url 'about_us' %}">Ba'tafsil Malumot</a></li>
+              <li><a href="{% url 'contact_us' %}">Biz Bilan Bog'lanish</a></li>
+
+            </ul>
+          </div>
+          <div class="header_top_right">
+            <p class="datetime">{% now "d F l Y" %} yil   <span class="time">{% now "H:i" %}</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="header_bottom">
+          <div class="logo_area"><a href="{% url 'home_page_view' %}" class="logo"><img src="{% static 'images/logo.jpg' %}" alt=""></a></div>
+          <div class="add_banner">  <div style="
+      color:#f1;
+      font-size:25px;
+      font-weight:710;
+      text-align:center;
+      line-height:3;
+      letter-spacing:0.5px;
+    ">
+            Bu yerda sizning reklamangiz bo‘lishi mumkin edi...
+    </div>
+        </div>
+
+
+
+  <section id="navArea">
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav main_nav">
+          <li class="active"><a href="{% url 'home_page_view' %}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+              <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">O'zbekiston yangiliklar</a>
+            <ul class="dropdown-menu" role="menu">
+          {% for uzb_news in uzb_news %}
+              <li style="display: flex; align-items: center; padding: 5px;"><img src="{{uzb_news.img.url}}" width="80px" alt=""><a href="{% url 'news_detail' uzb_news.id %}">{{uzb_news.title|truncatewords:5 }}</a></li>
+          {% endfor %}
+            </ul>
+          </li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Jahon yangiliklar</a>
+            <ul class="dropdown-menu" role="menu">
+          {% for jahon_news_category in jahon_news_category %}
+              <li style="display: flex; align-items: center; padding: 5px;"><img src="{{jahon_news_category.img.url}}" width="80px" alt=""><a href="{% url 'news_detail' jahon_news_category.id %}">{{jahon_news_category.title|truncatewords:5 }}</a></li>
+          {% endfor %}
+            </ul>
+          </li>
+            <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Iqtisodiyot</a>
+            <ul class="dropdown-menu dropdown-menu" role="menu">
+          {% for iqtisodiyot_news_category in iqtisodiyot_news_category %}
+              <li style="display: flex; align-items: center; padding: 5px;"><img src="{{iqtisodiyot_news_category.img.url}}" width="80px" alt=""><a href="{% url 'news_detail' iqtisodiyot_news_category.id %}">{{iqtisodiyot_news_category.title|truncatewords:5 }}</a></li>
+          {% endfor %}
+            </ul>
+          </li>
+               <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Jamiyat</a>
+            <ul class="dropdown-menu" role="menu">
+          {% for jamiyat_news in jamiyat_news %}<li style="display: flex; align-items: center; padding: 5px;"><img src="{{jamiyat_news.img.url}}" width="80px" alt=""><a href="{% url 'news_detail' jamiyat_news.id %}">{{jamiyat_news.title|truncatewords:5 }}</a></li>
+          {% endfor %}
+            </ul>
+          </li>
+                         <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Texnologiya</a>
+            <ul class="dropdown-menu" role="menu">
+          {% for texnologiya_news in texnologiya_news %}
+              <li style="display: flex; align-items: center; padding: 5px;"><img src="{{texnologiya_news.img.url}}" width="80px" alt=""><a href="{% url 'news_detail' texnologiya_news.id %}">{{texnologiya_news.title|truncatewords:5 }}</a></li>
+          {% endfor %}
+            </ul>
+          </li>
+                                   <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sport</a>
+            <ul class="dropdown-menu" role="menu">
+          {% for sport_news in sport_news %}
+              <li style="display: flex; align-items: center; padding: 5px;"><img src="{{sport_news.img.url}}" width="80px" alt=""><a href="{% url 'news_detail' sport_news.id %}">{{sport_news.title|truncatewords:5 }}</a></li>
+          {% endfor %}
+            </ul>
+          </li>
+          <li><a href="{% url 'contact_us' %}">Biz bilan bog'lanish</a></li>
+          <li><a href="{% url 'page_404' %}">404 Sahifa</a></li>
+        </ul>
+      </div>
+    </nav>
+  </section>
+  <section id="newsSection">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="latest_newsarea"> <span>So'ngi yangiliklar</span>
+          <ul id="ticker01" class="news_sticker">
+          {% for new in news %}
+            <li><a href="{% url 'news_detail' new.id %}"><img src="{{ new.img.url }}" alt="">{{ new.title|truncatewords:5 }}</a></li>
+          {% endfor %}
+          </ul>
+          <div class="social_area">
+            <ul class="social_nav">
+              <li class="facebook"><a href="#"></a></li>
+              <li class="twitter"><a href="#"></a></li>
+              <li class="flickr"><a href="#"></a></li>
+              <li class="pinterest"><a href="#"></a></li>
+              <li class="googleplus"><a href="#"></a></li>
+              <li class="vimeo"><a href="#"></a></li>
+              <li class="youtube"><a href="#"></a></li>
+              <li class="mail"><a href="#"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% block content %}
+
+  {% endblock content %}<footer id="footer">
+    <div class="footer_top">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="footer_widget wow fadeInLeftBig">
+            <h2>Flickr Suratlar </h2>
+            <h3>Tez kunlarda...</h3>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="footer_widget wow fadeInDown">
+            <h2>Tanlov</h2>
+            <ul class="tag_nav">
+              <li><a href="#">O'yinlar</a></li>
+              <li><a href="#">Sport</a></li>
+              <li><a href="#">Modda</a></li>
+              <li><a href="#">Bizness</a></li>
+              <li><a href="#">Hayot &amp; Tarzi</a></li>
+              <li><a href="#">Texnologiya</a></li>
+              <li><a href="#">Rasm</a></li>
+
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="footer_widget wow fadeInRightBig">
+            <h2>Kontaktimiz</h2>
+            <p>+998 94-733-66-65</p>
+            <address>
+           Uzbekistan Surxondaryo Termiz
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer_bottom">
+      <p class="copyright">Uzbekistan &copy; 2026 <a href="{% url 'contact_us' %}">NewsFeed</a></p>
+      <p class="developer" style="color:white">Developed by Arslon</p>
+    </div>
+  </footer>
+</div>
+{% block javascript %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/wow.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+<script src="{% static 'js/jquery.li-scroller.1.0.js' %}"></script>
+<script src="{% static 'js/jquery.newsTicker.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.pack.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+{% endblock javascript %}
+    </div>
+</body>
+
+</html>
