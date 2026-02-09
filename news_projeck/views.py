@@ -1,9 +1,40 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from unicodedata import category
+
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 from .forms import ContactForm
 from .models import News, Category
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+
+class CreateView(CreateView):
+    model = News
+    fields = ('title', 'slug', 'body', 'img', 'status')
+    template_name = 'crud/create.html'
+    success_url = reverse_lazy('news_list')
+
+
+class EditView(UpdateView):
+    model = News
+    fields = ('title', 'slug', 'body', 'img', 'status')
+    template_name = 'crud/news_edit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['news'] = News.objects.all()
+        context['category'] = Category.objects.all()
+        return context
+
+class DeleteView(DeleteView):
+    model = News
+    template_name = 'crud/delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['news'] = News.objects.all().order_by('-published_at')[:5]
+        return context
 
 
 def news_list(request):
@@ -14,11 +45,11 @@ def news_list(request):
     }
     return render(request, 'list.html', context=context)
 
-
-def news_detail(request, pk):
-    news = get_object_or_404(News, pk=pk)
+def news_detail(request, news):
+    news_item = get_object_or_404(News, slug=news)
+    print(f"Topilgan yangilik: {news_item.title}")
     context = {
-        'new': news
+        'new': news_item
     }
     return render(request, 'detail.html', context)
 
@@ -30,7 +61,7 @@ def home_page_view(request):
     last_uzb_news = News.objects.filter(category__name='O‘zbekiston')[0]
     jahon_news = News.objects.filter(category__name='Jahon')
     iqtisodiyot_news = News.objects.filter(category__name='Iqtisodiyot')
-    jamiyat_news = News.objects.filter(category__name='Jamiyat')[1:5]
+    jamiyat_neews = News.objects.filter(category__name='Jamiyat')[1:5]
     last_jamiyat_news = News.objects.filter(category__name='Jamiyat')[0]
     texnologiya_news = News.objects.filter(category__name='Texnologiya')[1:5]
     last_texnologiya_news = News.objects.filter(category__name='Texnologiya')[0]
@@ -49,14 +80,14 @@ def home_page_view(request):
         'rasmlar': rasmlar,
         'last_texnologiya_news': last_texnologiya_news,
         'texnologiya_news': texnologiya_news,
-        'jamiyat_news': jamiyat_news,
+        'jamiyat_neews': jamiyat_neews,
         'last_jamiyat_news': last_jamiyat_news,
         'iqtisodiyot_news': iqtisodiyot_news,
         'jahon_news': jahon_news,
         'last_uzb_news': last_uzb_news,
         'uzb_news': uzb_news,
         'categories': categories,
-        'news': news
+        'news': news,
     }
     return render(request, 'home.html', context)
 

@@ -1,235 +1,103 @@
 {% extends 'base.html' %}
 
-
 {% load static %}
 
-  {% block content %}
+{% block content %}
 
-  <section id="sliderSection">
-    <div class="row">
-      <div class="col-lg-8 col-md-8 col-sm-8">
-        <div class="slick_slider">
-          {% for new in news %}
-          <div class="single_iteam"> <a href="{% url 'news_detail' new.id %}"> <img src="{{ new.img.url }}" alt=""></a>
-            <div class="slider_article">
-              <h2><a class="slider_tittle" href="{% url 'news_detail' new.id %}">{{ new.title|truncatewords:5 }}</a></h2>
-              <p>{{ new.body|truncatewords:22 }}</p>
-
-            </div>
+<section id="sliderSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="slick_slider">
+        {% for new in news %}
+        <div class="single_iteam"> <a href="{{ new.get_absolute_url }}"> <img src="{{ new.img.url }}" alt=""></a>
+          <div class="slider_article">
+            <h2><a class="slider_tittle" href="{{ new.get_absolute_url }}">{{ new.title|truncatewords:5 }}</a></h2>
+            <p>{{ new.body|truncatewords:22 }}</p>
           </div>
-          {% endfor %}
         </div>
+        {% endfor %}
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="latest_post">
-          <h2><span>Jahon Yangiliklari</span></h2>
-          <div class="latest_post_container">
-            <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
-            <ul class="latest_postnav">
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <div class="latest_post">
+        <h2><span>Jahon Yangiliklari</span></h2>
+        <div class="latest_post_container">
+          <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+          <ul class="latest_postnav">
             {% for jahon_new in jahon_news %}
-              <li>
-                <div class="media"> <a href="{% url 'news_detail' jahon_new.id %}" class="media-left"> <img alt="" src="{{ jahon_new.img.url }}"> </a>
-                  <div class="media-body"> <a href="{% url 'news_detail' jahon_new.id %}" class="catg_title">{{ jahon_new.title|truncatewords:5 }}</a> </div>
-                </div>
-              </li>
+            <li>
+              <div class="media"> <a href="{{ jahon_new.get_absolute_url }}" class="media-left"> <img alt="" src="{{ jahon_new.img.url }}"> </a>
+                <div class="media-body"> <a href="{{ jahon_new.get_absolute_url }}" class="catg_title">{{ jahon_new.title|truncatewords:5 }}</a> </div>
+              </div>
+            </li>
             {% endfor %}
-            </ul>
-            <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
-          </div>
+          </ul>
+          <div id="next-button"><i class="fa fa-chevron-down"></i></div>
         </div>
       </div>
     </div>
-  </section>
-  <section id="contentSection">
-    <div class="row">
-      <div class="col-lg-8 col-md-8 col-sm-8">
-        <div class="left_content">
-          <div class="single_post_content">
-            <h2><span>O'zbekiston yangiliklari</span></h2>
-            <div class="single_post_content_left">
-              <ul class="business_catgnav  wow fadeInDown">
-                <li>
-                  <figure class="bsbig_fig"> <a href="{% url 'news_detail' last_uzb_news.id %}" class="featured_img"> <img alt="" src="{{ last_uzb_news.img.url }}"> <span class="overlay"></span> </a>
-                    <figcaption> <a href="{% url 'news_detail' last_uzb_news.id %}">{{ last_uzb_news.title|truncatewords:5}}</a> </figcaption>
-                    <p>{{ last_uzb_news.body|truncatewords:22}}</p>
-                  </figure>
-                </li>
-              </ul>
-            </div>
-            <div class="single_post_content_right">
-              <ul class="spost_nav">
-            {% for uzb_news in uzb_news %}
-                <li>
-                  <div class="media wow fadeInDown"> <a href="{% url 'news_detail' uzb_news.id %}" class="media-left"> <img alt="" src="{{ uzb_news.img.url }}"> </a>
-                    <div class="media-body"> <a href="{% url 'news_detail' uzb_news.id %}" class="catg_title">{{ uzb_news.title|truncatewords:5   }}</a> </div>
-                  </div>
-                </li>
-            {% endfor %}
-              </ul>
-            </div>
-          </div>
-          <div class="fashion_technology_area">
-            <div class="fashion">
-              <div class="single_post_content">
-                <h2><span>Jamiyat</span></h2>
-                <ul class="business_catgnav wow fadeInDown">
-                  <li>
-                    <figure class="bsbig_fig"> <a href="{% url 'news_detail' last_jamiyat_news.id %}" class="featured_img"> <img alt="" src="{{ last_jamiyat_news.img.url }}"> <span class="overlay"></span> </a>
-                      <figcaption> <a href="{% url 'news_detail' last_jamiyat_news.id %}">{{ last_jamiyat_news.title|truncatewords:5 }}</a> </figcaption>
-                      <p>{{last_jamiyat_news.body|truncatewords:22}}</p>
-                    </figure>
-                  </li>
-                </ul>
-                <ul class="spost_nav">
-              {% for jamiyat_new in jamiyat_news %}
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="{% url 'news_detail' jamiyat_new.id %}" class="media-left"> <img alt="" src="{{jamiyat_new.img.url }}"> </a>
-                      <div class="media-body"> <a href="{% url 'news_detail' jamiyat_new.id %}  " class="catg_title">{{ jamiyat_new.title|truncatewords:5 }}</a> </div>
-                    </div>
-                  </li>
-              {% endfor %}
-                </ul>
-              </div>
-            </div>
-            <div class="technology">
-              <div class="single_post_content">
-                <h2><span>Texnologiya</span></h2>
-                <ul class="business_catgnav">
-                  <li>
-                    <figure class="bsbig_fig wow fadeInDown"> <a href="{% url 'news_detail' last_texnologiya_news.id %}" class="featured_img"> <img alt="" src="{{ last_texnologiya_news.img.url }}"> <span class="overlay"></span> </a>
-                      <figcaption> <a href="{% url 'news_detail' last_texnologiya_news.id %}">{{ last_texnologiya_news.title|truncatewords:5 }}</a> </figcaption>
-                      <p>{{ last_texnologiya_news.body|truncatewords:22 }}</p>
-                    </figure>
-                  </li>
-                </ul>
-                <ul class="spost_nav">
-              {% for texnologiya_news in texnologiya_news %}
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="{% url 'news_detail' texnologiya_news.id %}" class="media-left"> <img alt="" src="{{ texnologiya_news.img.url }}"> </a>
-                      <div class="media-body"> <a href="{% url 'news_detail' texnologiya_news.id %}" class="catg_title"> {{ texnologiya_news.title|truncatewords:5 }}</a> </div>
-                    </div>
-                  </li>
-              {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="single_post_content">
-            <h2><span>Fotosuratlar</span></h2>
-            <ul class="photograph_nav  wow fadeInDown">
-              {% for rasmlar in rasmlar %}
-              <li>
-                <div class="photo_grid">
-                  <figure class=""> <a class="fancybox-buttons" data-fancybox-group="button" href="{{ rasmlar.img.url }}" title="RASMLAR"> <img src="{{ rasmlar.img.url }}" alt=""/></a> </figure>
-                </div>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-          <div class="single_post_content">
-            <h2><span>Sport</span></h2>
-            <div class="single_post_content_left">
-              <ul class="business_catgnav">
-                <li>
-                  <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{% url 'news_detail' last_sport_news.id %}"> <img src="{{ last_sport_news.img.url }}" alt=""> <span class="overlay"></span> </a>
-                    <figcaption> <a href="{% url 'news_detail' last_sport_news.id %}">{{ last_sport_news.title|truncatewords:5 }}</a> </figcaption>
-                    <p>{{ last_sport_news.body|truncatewords:22 }}</p>
-                  </figure>
-                </li>
-              </ul>
-            </div>
-            <div class="single_post_content_right">
-              <ul class="spost_nav">
-              {% for sport_news in sport_news %}
-                <li>
-                  <div class="media wow fadeInDown"> <a href="{% url 'news_detail' sport_news.id %}" class="media-left"> <img alt="" src="{{ sport_news.img.url }}"> </a>
-                    <div class="media-body"> <a href="{% url 'news_detail' sport_news.id %}" class="catg_title">{{ sport_news.title|truncatewords:5 }}</a> </div>
-                  </div>
-                </li>
-              {% endfor %}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <aside class="right_content">
-          <div class="single_sidebar">
-            <h2><span>Iqtisodiyot</span></h2>
-            <ul class="spost_nav">
-            {% for iqtisodiyot_new in iqtisodiyot_news %}
-              <li>
-                <div class="media wow fadeInDown"> <a href="{% url 'news_detail' iqtisodiyot_new.id %}" class="media-left"> <img alt="" src="{{iqtisodiyot_new.img.url  }}"> </a>
-                  <div class="media-body"> <a href="{% url 'news_detail' iqtisodiyot_new.id %}" class="catg_title"> {{iqtisodiyot_new.title|truncatewords:5}}</a> </div>
-                </div>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-          <div class="single_sidebar">
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Turkum</a></li>
-              <li role="presentation"><a href="video" aria-controls="profile" role="tab" data-toggle="tab">Vidyo</a></li>
-              <li role="presentation"><a href="comments" aria-controls="messages" role="tab" data-toggle="tab">Commentarya</a></li>
-            </ul>
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="category">
-                <ul>
-                  <li class="cat-item"><a href="">O'zbekiston yangiliklari</a></li>
-                  <li class="cat-item"><a href="">Jahon yangiliklari</a></li>
-                  <li class="cat-item"><a href="">Iqtisodiyot</a></li>
-                  <li class="cat-item"><a href="">Jamiyat</a></li>
-                  <li class="cat-item"><a href="">Texnologiya</a></li>
-                  <li class="cat-item"><a href="">Sport</a></li>
-                </ul>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="video">
-                <div class="vide_area">
-                  <iframe width="100%" height="250" src="#" frameborder="0" allowfullscreen></iframe>
-                </div>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="comments">
-                <ul class="spost_nav">
-              {% for comentarya_news in comentarya_news %}
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ comentarya_news.img.url }}"> </a>
-                      <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> {{comentarya_news.title|truncatewords:5}}</a> </div>
-                    </div>
-                  </li>
-              {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="single_sidebar wow fadeInDown">
-            <h2><span>Hamkorlar</span></h2>
-            <a class="sideAdd" href="#"><img src="{% static 'images/add_img.jpg' %}" alt=""></a> </div>
-          <div class="single_sidebar wow fadeInDown">
-            <h2><span>Arxivdagi Kategoryalar</span></h2>
-            <select class="catgArchive">
-              <option>Kategoryalarni Tanlash</option>
-              <option>O'zbekiston yangiliklari</option>
-              <option>Jahon yangiliklari</option>
-              <option>Iqtisodiyot</option>
-              <option>Jamiyat</option>
-              <option>Texnologiya</option>
-              <option>Sport</option>
-            </select>
-          </div>
-          <div class="single_sidebar wow fadeInDown">
-            <h2><span>Havola</span></h2>
-            <ul>
-              <li><a href="#">O'zbekiston yangiliklari</a></li>
-              <li><a href="#">Jahon yangiliklari</a></li>
-              <li><a href="#">Iqtisodiyot</a></li>
-              <li><a href="#">Jamiyat</a></li>
-              <li><a href="#">Texnologiya</a></li>
-              <li><a href="#">Sport</a></li>
-            </ul>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
+<section id="contentSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="left_content">
+        <div class="single_post_content">
+          <h2><span>O'zbekiston yangiliklari</span></h2>
+          <div class="single_post_content_left">
+            <ul class="business_catgnav wow fadeInDown">
+              <li>
+                <figure class="bsbig_fig"> <a href="{{ last_uzb_news.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ last_uzb_news.img.url }}"> <span class="overlay"></span> </a>
+                  <figcaption> <a href="{{ last_uzb_news.get_absolute_url }}">{{ last_uzb_news.title|truncatewords:5}}</a> </figcaption>
+                  <p>{{ last_uzb_news.body|truncatewords:22}}</p>
+                </figure>
+              </li>
+            </ul>
+          </div>
+          <div class="single_post_content_right">
+            <ul class="spost_nav">
+              {% for uzb_news_item in uzb_news %}
+              <li>
+                <div class="media wow fadeInDown"> <a href="{{ uzb_news_item.get_absolute_url }}" class="media-left"> <img alt="" src="{{ uzb_news_item.img.url }}"> </a>
+                  <div class="media-body"> <a href="{{ uzb_news_item.get_absolute_url }}" class="catg_title">{{ uzb_news_item.title|truncatewords:5 }}</a> </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="fashion_technology_area">
+          <div class="fashion">
+            <div class="single_post_content">
+              <h2><span>Jamiyat</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="{{ last_jamiyat_news.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ last_jamiyat_news.img.url }}"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="{{ last_jamiyat_news.get_absolute_url }}">{{ last_jamiyat_news.title|truncatewords:5 }}</a> </figcaption>
+                    <p>{{ last_jamiyat_news.body|truncatewords:22 }}</p>
+                  </figure>
+                </li>
+              </ul>
+              <ul class="spost_nav">
+                {% for jamiyat_new in jamiyat_neews %}
+                <li>
+                  <div class="media wow fadeInDown">
+                    <a href="{{ jamiyat_new.get_absolute_url }}" class="media-left">
+                      <img alt="" src="{{ jamiyat_new.img.url }}">
+                    </a>
+                    <div class="media-body">
+                      <a href="{{ jamiyat_new.get_absolute_url }}" class="catg_title">{{ jamiyat_new.title|truncatewords:5 }}</a>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   {% endblock content %}

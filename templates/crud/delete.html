@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h3>"{{ object.title }}"</h3>
+        <p>"{{ object.body }}"</p>
+        <h4><button type="submit" style="color: white; background-color: red">Xabarni o'chirish 🗑️</button></h4>
+        <h4><a href="{% url 'news_detail' object.slug %}" style="color: white; background-color: green"> Orqaga 👈🏻</a></h4>
+    </form>
+{% endblock %}

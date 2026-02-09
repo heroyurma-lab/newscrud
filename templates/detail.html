@@ -3,11 +3,20 @@
 
 {% block content %}
 <div style="text-align: center; margin-top: 20px">
-    >>>>>><h3>Category : {{ new.category }}</h3>
-<h1 style="padding: 20px;">{{ new.title }}</h1>
-<h3>{{new.body}}</h3>
+    <h3>Category : {{ news_item.category }}</h3>
+    <h1>Siz qidirayotgan yangilik: {{ new.title }}</h1>
+    <p>Matn: {{ new.body }}</p>
 
-<img src="{{ new.img.url }}" width="100%">
-<h3>Qo'yilgan kun:  {{new.created_at}}</h3>
+{% if new.img %}
+    <img src="{{ new.img.url }}" alt="{{ new.title }}" style="width: 100%; height: auto;">
+{% else %}
+    <p>Rasm mavjud emas</p>
+{% endif %}
+
+    <div>
+        <a href="{% url 'news_edit' new.slug %}"><button style="color: white; background-color: green">TAHRIRLASH</button></a>
+        <a href="{% url 'news_delete' new.slug %}"><button style="color: white; background-color: red">O'CHIRISH</button></a>
     </div>
+    <h3>Qo'yilgan kun: {{ news_item.published_at }}</h3>
+</div>
 {% endblock content %}
